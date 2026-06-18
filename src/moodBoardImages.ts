@@ -1,4 +1,6 @@
-export const MOOD_BOARD_IMAGES = [
+import { assetUrl } from './assetUrl'
+
+const MOOD_BOARD_PATHS = [
   '/assets/mood-board/01.jpg',
   '/assets/mood-board/02.jpg',
   '/assets/mood-board/03.png',
@@ -31,3 +33,5 @@ export const MOOD_BOARD_IMAGES = [
   '/assets/mood-board/30.jpg',
   '/assets/mood-board/31.png',
 ] as const
+
+export const MOOD_BOARD_IMAGES = MOOD_BOARD_PATHS.map(assetUrl)

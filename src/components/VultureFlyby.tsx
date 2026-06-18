@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { assetUrl } from '../assetUrl'
 import './VultureFlyby.css'
 
 const FLY_INTERVAL_MS = 25_000
@@ -50,7 +51,7 @@ export function VultureFlyby({ entered }: VultureFlybyProps) {
   return (
     <img
       key={flightKey}
-      src="/assets/vulture.gif"
+      src={assetUrl('/assets/vulture.gif')}
       alt=""
       className="vulture-flyby"
       style={{ top }}

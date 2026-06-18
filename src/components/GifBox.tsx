@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { assetUrl } from '../assetUrl'
 import './GifBox.css'
 
 export function GifBox() {
@@ -15,7 +16,7 @@ export function GifBox() {
   return (
     <div className="gif-box">
       <img
-        src="/assets/midzards.gif"
+        src={assetUrl('/assets/midzards.gif')}
         alt="Midzards characters"
         className="gif-box__gif"
         onError={() => setUseFallback(true)}

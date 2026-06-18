@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
+import { assetUrl } from '../assetUrl'
 import './MovieBox.css'
 
 export function MovieBox() {
@@ -36,7 +37,7 @@ export function MovieBox() {
         playsInline
         poster="/assets/movie.png"
       >
-        <source src="/assets/video/movie.mp4" type="video/mp4" />
+        <source src={assetUrl('/assets/video/movie.mp4')} type="video/mp4" />
       </video>
     </div>
   )
