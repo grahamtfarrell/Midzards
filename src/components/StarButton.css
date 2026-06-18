@@ -1,0 +1,122 @@
+.star-button {
+  position: absolute;
+  top: 3.5%;
+  right: 2.5%;
+  width: 13%;
+  height: 20%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.star-button__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: star-spin 6s linear infinite;
+  user-select: none;
+}
+
+.star-button:hover .star-button__img {
+  animation-duration: 1.5s;
+}
+
+.star-button--clicked .star-button__img {
+  animation-duration: 0.4s;
+}
+
+@keyframes star-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.story-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 32px);
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.story-modal__box {
+  position: relative;
+  box-sizing: border-box;
+  width: min(920px, 94vw);
+  padding: clamp(16px, 2.5vw, 24px) clamp(18px, 3vw, 28px);
+  background: #630800;
+  border: var(--bento-stroke);
+  border-radius: 8px;
+}
+
+.story-modal__close {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #000;
+  font-size: clamp(20px, 3vw, 28px);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.story-modal__content {
+  color: #fff;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  letter-spacing: -0.03em;
+  text-align: center;
+  line-height: 1.38;
+}
+
+.story-modal__content p {
+  margin: 0 0 0.55em;
+}
+
+.story-modal__content p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 641px) {
+  .story-modal__box {
+    height: calc(100vh - var(--star-banner-height) - 40px);
+    max-height: calc(100vh - var(--star-banner-height) - 40px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .story-modal__content {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 640px) {
+  .story-modal__box {
+    max-height: min(88vh, 900px);
+    overflow: auto;
+  }
+
+  .story-modal__content {
+    font-size: clamp(12px, 3.4vw, 15px);
+    line-height: 1.5;
+  }
+
+  .story-modal__content p {
+    margin-bottom: 0.85em;
+  }
+}

@@ -1,0 +1,29 @@
+.vulture-flyby {
+  position: fixed;
+  left: 0;
+  z-index: 1001;
+  width: clamp(96px, 14vw, 200px);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  backface-visibility: hidden;
+  animation: vulture-flyby 4s linear forwards;
+}
+
+/* ~5° climb: tan(5°) ≈ 0.0875 × horizontal travel */
+@keyframes vulture-flyby {
+  from {
+    transform: translate3d(-120%, 0, 0);
+  }
+
+  to {
+    transform: translate3d(calc(100vw + 120%), -8.75vw, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vulture-flyby {
+    animation: none;
+    display: none;
+  }
+}

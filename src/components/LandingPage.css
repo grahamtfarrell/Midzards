@@ -1,0 +1,176 @@
+.landing {
+  --horizon: 67%;
+  position: relative;
+  width: 100%;
+  height: calc(100% - var(--star-banner-height));
+  margin-top: var(--star-banner-height);
+  overflow: hidden;
+  background: #613517 url('/assets/landing/desert.jpg') center / cover no-repeat;
+}
+
+.landing__header {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: clamp(10px, 2vw, 18px) clamp(14px, 2.4vw, 28px);
+  pointer-events: none;
+}
+
+.landing__tagline {
+  font-family: 'Cowboys', serif;
+  font-size: clamp(9.45px, 1.21vw, 11.55px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ea3323;
+}
+
+.landing__main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.landing__scene {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% - var(--horizon));
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: min(94vw, 980px);
+  pointer-events: none;
+}
+
+.landing__logo {
+  display: block;
+  flex-shrink: 0;
+  width: min(78vw, 1173px);
+  /* Pull up through the logo PNG's ~22% bottom transparent padding */
+  margin: 0 0 calc(clamp(2px, 0.4vh, 8px) - 0.084 * min(78vw, 1173px));
+  object-fit: contain;
+  user-select: none;
+}
+
+.landing__zards {
+  display: flex;
+  flex-shrink: 0;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  line-height: 0;
+  /* Reserve tallest zard frame so logo above doesn't shift when frames swap */
+  min-height: calc(clamp(112px, 14vw, 208px) * (519 / 512));
+}
+
+.landing__zard {
+  flex: 0 0 auto;
+  width: clamp(112px, 14vw, 208px);
+  animation-name: zard-wobble;
+  animation-timing-function: steps(2, end);
+  animation-iteration-count: infinite;
+}
+
+.landing__zard:not(:first-child) {
+  margin-left: clamp(-58px, -7.2vw, -29px);
+}
+
+.landing__zard img {
+  display: block;
+  width: 100%;
+  height: calc(clamp(112px, 14vw, 208px) * (519 / 512));
+  object-fit: contain;
+  object-position: bottom;
+  image-rendering: pixelated;
+  mix-blend-mode: screen;
+  user-select: none;
+}
+
+.landing__enter {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(36px, 8vh, 88px);
+  transform: translateX(-50%);
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: transform 120ms ease, filter 120ms ease;
+}
+
+.landing__enter img {
+  display: block;
+  width: min(24vw, 260px);
+  height: auto;
+  user-select: none;
+}
+
+.landing__enter:hover {
+  transform: translateX(-50%) scale(1.03);
+  filter: brightness(1.06);
+}
+
+.landing__enter:active {
+  transform: translateX(-50%) scale(0.98);
+}
+
+@keyframes zard-wobble {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  20% {
+    transform: translate(-0.5px, 0.5px) rotate(-0.4deg);
+  }
+
+  40% {
+    transform: translate(0.5px, -0.5px) rotate(0.35deg);
+  }
+
+  60% {
+    transform: translate(-0.5px, 0) rotate(-0.25deg);
+  }
+
+  80% {
+    transform: translate(0.5px, 0.5px) rotate(0.2deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .landing {
+    --horizon: 66%;
+  }
+
+  .landing__logo {
+    width: min(80vw, 100%);
+  }
+
+  .landing__zards {
+    min-height: calc(clamp(80px, 17.6vw, 144px) * (519 / 512));
+  }
+
+  .landing__zard {
+    width: clamp(80px, 17.6vw, 144px);
+  }
+
+  .landing__zard img {
+    height: calc(clamp(80px, 17.6vw, 144px) * (519 / 512));
+  }
+
+  .landing__zard:not(:first-child) {
+    margin-left: clamp(-38px, -8.8vw, -19px);
+  }
+
+  .landing__enter img {
+    width: min(43vw, 200px);
+  }
+}

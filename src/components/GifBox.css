@@ -1,0 +1,23 @@
+.gif-box {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 3px solid #ef4020;
+  border-radius: 10.6% / 10.9%;
+}
+
+.gif-box__gif,
+.gif-box__fallback {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.gif-box__fallback {
+  position: absolute;
+  inset: 0;
+}

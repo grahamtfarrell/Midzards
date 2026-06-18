@@ -1,0 +1,57 @@
+.star-banner {
+  --star-banner-gap: clamp(18px, 3vw, 36px);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: var(--star-banner-height);
+  background: #750900;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.star-banner__track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  animation: star-banner-scroll 18s linear infinite;
+}
+
+.star-banner__group {
+  display: flex;
+  align-items: center;
+  gap: var(--star-banner-gap);
+  height: 100%;
+}
+
+.star-banner__star {
+  display: block;
+  flex-shrink: 0;
+  width: clamp(12px, 1.6vw, 16px);
+  height: clamp(12px, 1.6vw, 16px);
+  background: #ea3323;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+}
+
+@keyframes star-banner-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
