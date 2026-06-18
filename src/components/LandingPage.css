@@ -60,6 +60,12 @@
   user-select: none;
 }
 
+.landing--intro .landing__logo {
+  opacity: 0;
+  transform: translateY(-70vh) scale(1.12);
+  animation: landing-logo-slam 650ms cubic-bezier(0.22, 1, 0.36, 1) var(--intro-logo-delay, 150ms) forwards;
+}
+
 .landing__zards {
   display: flex;
   flex-shrink: 0;
@@ -74,9 +80,46 @@
 .landing__zard {
   flex: 0 0 auto;
   width: clamp(112px, 14vw, 208px);
-  animation-name: zard-wobble;
-  animation-timing-function: steps(2, end);
-  animation-iteration-count: infinite;
+}
+
+.landing--intro .landing__zard:not(.landing__zard--settled) {
+  opacity: 0;
+  transform: translateX(calc((3 - var(--zard-slot, 0)) * 42px)) translateY(36px)
+    scale(0.72)
+    rotate(calc((var(--zard-slot, 0) - 3) * 6deg));
+  animation: landing-zard-shuffle 480ms cubic-bezier(0.34, 1.25, 0.64, 1) var(--zard-intro-delay) forwards;
+}
+
+.landing__zard:nth-child(1) {
+  --zard-slot: 0;
+}
+
+.landing__zard:nth-child(2) {
+  --zard-slot: 1;
+}
+
+.landing__zard:nth-child(3) {
+  --zard-slot: 2;
+}
+
+.landing__zard:nth-child(4) {
+  --zard-slot: 3;
+}
+
+.landing__zard:nth-child(5) {
+  --zard-slot: 4;
+}
+
+.landing__zard:nth-child(6) {
+  --zard-slot: 5;
+}
+
+.landing__zard:nth-child(7) {
+  --zard-slot: 6;
+}
+
+.landing__zard--settled {
+  animation: zard-wobble 2s steps(2, end) infinite;
 }
 
 .landing__zard:not(:first-child) {
@@ -106,6 +149,17 @@
   transition: transform 120ms ease, filter 120ms ease;
 }
 
+.landing--intro .landing__enter {
+  opacity: 0;
+  transform: translateX(-50%) translateY(calc(100% + clamp(36px, 8vh, 88px)));
+  pointer-events: none;
+  animation: landing-enter-slide 550ms cubic-bezier(0.22, 1, 0.36, 1) var(--intro-enter-delay, 1990ms) forwards;
+}
+
+.landing--intro-complete .landing__enter {
+  pointer-events: auto;
+}
+
 .landing__enter img {
   display: block;
   width: min(24vw, 260px);
@@ -120,6 +174,51 @@
 
 .landing__enter:active {
   transform: translateX(-50%) scale(0.98);
+}
+
+@keyframes landing-logo-slam {
+  0% {
+    opacity: 0;
+    transform: translateY(-70vh) scale(1.12);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes landing-zard-shuffle {
+  0% {
+    opacity: 0;
+    transform: translateX(calc((3 - var(--zard-slot, 0)) * 42px)) translateY(36px)
+      scale(0.72)
+      rotate(calc((var(--zard-slot, 0) - 3) * 6deg));
+  }
+
+  55% {
+    opacity: 1;
+    transform: translateX(calc((3 - var(--zard-slot, 0)) * -6px)) translateY(-4px)
+      scale(1.04)
+      rotate(calc((var(--zard-slot, 0) - 3) * -1deg));
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes landing-enter-slide {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(calc(100% + clamp(36px, 8vh, 88px)));
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
 @keyframes zard-wobble {
@@ -172,5 +271,28 @@
 
   .landing__enter img {
     width: min(43vw, 200px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing--intro .landing__logo,
+  .landing--intro .landing__zard:not(.landing__zard--settled) {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .landing--intro .landing__enter {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .landing--intro .landing__enter {
+    transform: translateX(-50%);
+    pointer-events: auto;
+  }
+
+  .landing__zard--settled {
+    animation: none;
   }
 }

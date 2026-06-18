@@ -57,8 +57,20 @@ export function tileSize(scale: number) {
   }
 }
 
+/** Matches --star-banner-height in index.css */
+const STAR_BANNER_HEIGHT = 42
+const MOBILE_MAX_WIDTH = 640
+
 export function computeScale() {
-  const scaleW = window.innerWidth / TILE_WIDTH
-  const scaleH = window.innerHeight / TILE_HEIGHT
+  const availableW = window.innerWidth
+  const availableH = window.innerHeight - STAR_BANNER_HEIGHT
+
+  if (availableW <= MOBILE_MAX_WIDTH) {
+    // Fill the viewport vertically with one bento tile; scroll to explore the grid.
+    return availableH / TILE_HEIGHT
+  }
+
+  const scaleW = availableW / TILE_WIDTH
+  const scaleH = availableH / TILE_HEIGHT
   return Math.min(scaleW, scaleH) * 0.92
 }
