@@ -1,8 +1,8 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import './StarButton.css'
 
-const STORY_PARAGRAPHS = [
+export const STORY_PARAGRAPHS = [
   'In the far southern reaches of Midland lies a barren sea of sand.',
   'Were it not for the careful records of wandering monks, no one would remember that this wasteland was once a kingdom of unimaginable splendor. Ancient texts speak of towering castles, grand arenas, flourishing forests, crystal lakes, and cities adorned with works of art beyond compare.',
   'Who lived here?',
@@ -34,7 +34,23 @@ const STORY_PARAGRAPHS = [
   '...right?',
 ]
 
+export const WHY_PARAGRAPHS = [
+  'As we think about MidEvils and our vision for the future, we struggle to imagine a world where pixels are not a part of it.',
+  'Pixel art is, in many ways, the cornerstone of NFT culture. It is the language through which so many of us first fell in love with digital ownership, online communities, and internet-native art. As we continue to evolve MidEvils and reach new audiences, we believe pixel art is a necessary step in that journey.',
+  'Many people are drawn to illustration. Many others feel called to pixels. We happen to love both.',
+  'Original Infinite Fun supporters know that the first six months of this company were spent building and experimenting with pixel art. We loved it then, and we love it now. Returning to the medium feels kind of like a homecoming. It gives us the opportunity to create something entirely new while still feeling deeply connected to the roots of this community.',
+  'Pixel art is a practice in distillation. When we think of the grime of this world and what it means to work hard despite little recognition, our minds go to the American West. We think of cattle, cowboys, dirt, earth tones, cigarettes, the hot sun and the horizon. What better way to capture this feeling than in a collection of some Mid Lizards … some MIDZARDS.',
+]
+
 const DESKTOP_BREAKPOINT = 641
+
+type StarButtonProps = {
+  paragraphs: readonly string[]
+  modalLabel: string
+  modalVariant?: 'story' | 'compact'
+  fillBox?: boolean
+  children?: ReactNode
+}
 
 function fitStoryText(content: HTMLElement) {
   content.style.fontSize = ''
@@ -48,10 +64,18 @@ function fitStoryText(content: HTMLElement) {
   }
 }
 
-export function StarButton() {
+export function StarButton({
+  paragraphs,
+  modalLabel,
+  modalVariant = 'story',
+  fillBox = false,
+  children,
+}: StarButtonProps) {
   const [open, setOpen] = useState(false)
   const boxRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
+
+  const openModal = () => setOpen(true)
 
   useEffect(() => {
     if (!open) return
@@ -65,7 +89,7 @@ export function StarButton() {
   }, [open])
 
   useLayoutEffect(() => {
-    if (!open || window.innerWidth < DESKTOP_BREAKPOINT) return
+    if (!open || modalVariant !== 'story' || window.innerWidth < DESKTOP_BREAKPOINT) return
 
     const box = boxRef.current
     const content = contentRef.current
@@ -83,24 +107,53 @@ export function StarButton() {
     runFit()
     window.addEventListener('resize', runFit)
     return () => window.removeEventListener('resize', runFit)
-  }, [open])
+  }, [open, modalVariant])
+
+  const star = (
+    <span
+      className={`star-button__star ${open ? 'star-button__star--clicked' : ''}`}
+      aria-hidden={fillBox ? true : undefined}
+    >
+      <img
+        className="star-button__img"
+        src="/assets/click-me.png"
+        alt=""
+        draggable={false}
+      />
+    </span>
+  )
+
+  const trigger = fillBox ? (
+    <button
+      type="button"
+      className={`star-button-box ${open ? 'star-button-box--open' : ''}`}
+      aria-label={modalLabel}
+      aria-expanded={open}
+      onClick={openModal}
+    >
+      {children}
+      {star}
+    </button>
+  ) : (
+    <button
+      type="button"
+      className={`star-button ${open ? 'star-button--clicked' : ''}`}
+      aria-label="Click me"
+      aria-expanded={open}
+      onClick={openModal}
+    >
+      <img
+        className="star-button__img"
+        src="/assets/click-me.png"
+        alt=""
+        draggable={false}
+      />
+    </button>
+  )
 
   return (
     <>
-      <button
-        type="button"
-        className={`star-button ${open ? 'star-button--clicked' : ''}`}
-        aria-label="Click me"
-        aria-expanded={open}
-        onClick={() => setOpen(true)}
-      >
-        <img
-          className="star-button__img"
-          src="/assets/click-me.png"
-          alt=""
-          draggable={false}
-        />
-      </button>
+      {trigger}
 
       {open &&
         createPortal(
@@ -108,12 +161,14 @@ export function StarButton() {
             className="story-modal"
             role="dialog"
             aria-modal="true"
-            aria-label="The Story of Midland"
+            aria-label={modalLabel}
             onClick={() => setOpen(false)}
           >
             <div
               ref={boxRef}
-              className="story-modal__box"
+              className={`story-modal__box${
+                modalVariant === 'compact' ? ' story-modal__box--compact' : ''
+              }`}
               onClick={(event) => event.stopPropagation()}
             >
               <button
@@ -125,7 +180,7 @@ export function StarButton() {
                 ×
               </button>
               <div ref={contentRef} className="story-modal__content">
-                {STORY_PARAGRAPHS.map((paragraph) => (
+                {paragraphs.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
               </div>

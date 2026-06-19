@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import { StarButton } from './StarButton'
+import { STORY_PARAGRAPHS, StarButton, WHY_PARAGRAPHS } from './StarButton'
 import { MovieBox } from './MovieBox'
 import { GifBox } from './GifBox'
 import { BoardBox } from './BoardBox'
@@ -8,6 +8,22 @@ import './BentoUnit.css'
 
 function StaticImage({ src, alt }: { src: string; alt: string }) {
   return <img src={src} alt={alt} className="bento-box__img" draggable={false} />
+}
+
+function FramedImage({
+  src,
+  alt,
+  frameClassName,
+}: {
+  src: string
+  alt: string
+  frameClassName: string
+}) {
+  return (
+    <div className={`bento-box__frame ${frameClassName}`}>
+      <img src={src} alt={alt} className="bento-box__img" draggable={false} />
+    </div>
+  )
 }
 
 interface BentoUnitProps {
@@ -22,12 +38,22 @@ export function BentoUnit({ gutter, mapPriority = false }: BentoUnitProps) {
       style={{ '--bento-gutter': `${gutter}px` } as CSSProperties}
     >
       <div className="bento-box bento-box--story">
-        <StaticImage src="/assets/story.png" alt="The Story" />
-        <StarButton />
+        <StarButton
+          paragraphs={STORY_PARAGRAPHS}
+          modalLabel="The Story of Midland"
+          modalVariant="story"
+          fillBox
+        >
+          <StaticImage src="/assets/story.png" alt="The Story" />
+        </StarButton>
       </div>
 
       <div className="bento-box bento-box--clip">
-        <StaticImage src="/assets/clip.png" alt="How it works" />
+        <FramedImage
+          src="/assets/clip.png"
+          alt="How it works"
+          frameClassName="bento-box__frame--clip"
+        />
       </div>
 
       <div className="bento-mapcol">
@@ -44,7 +70,11 @@ export function BentoUnit({ gutter, mapPriority = false }: BentoUnitProps) {
       </div>
 
       <div className="bento-box bento-box--free">
-        <StaticImage src="/assets/free.png" alt="Free mint info" />
+        <FramedImage
+          src="/assets/free.png"
+          alt="Free mint info"
+          frameClassName="bento-box__frame--free"
+        />
       </div>
 
       <div className="bento-box bento-box--board">
@@ -52,7 +82,18 @@ export function BentoUnit({ gutter, mapPriority = false }: BentoUnitProps) {
       </div>
 
       <div className="bento-box bento-box--why">
-        <StaticImage src="/assets/why.png" alt="Why Midzards" />
+        <StarButton
+          paragraphs={WHY_PARAGRAPHS}
+          modalLabel="Why Midzards"
+          modalVariant="compact"
+          fillBox
+        >
+          <FramedImage
+            src="/assets/why.png"
+            alt="Why Midzards"
+            frameClassName="bento-box__frame--why"
+          />
+        </StarButton>
       </div>
     </div>
   )

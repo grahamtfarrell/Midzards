@@ -11,6 +11,31 @@
   z-index: 2;
 }
 
+.star-button-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.star-button-box .star-button__star {
+  position: absolute;
+  top: 3.5%;
+  right: 2.5%;
+  width: 13%;
+  height: 20%;
+  pointer-events: none;
+  z-index: 2;
+}
+
 .star-button__img {
   display: block;
   width: 100%;
@@ -20,11 +45,14 @@
   user-select: none;
 }
 
-.star-button:hover .star-button__img {
+.star-button:hover .star-button__img,
+.star-button-box:hover .star-button__star .star-button__img {
   animation-duration: 1.5s;
 }
 
-.star-button--clicked .star-button__img {
+.star-button--clicked .star-button__img,
+.star-button-box--open .star-button__star .star-button__img,
+.star-button__star--clicked .star-button__img {
   animation-duration: 0.4s;
 }
 
@@ -59,6 +87,18 @@
   border-radius: 8px;
 }
 
+.story-modal__box--compact {
+  width: min(720px, 94vw);
+  height: auto;
+  max-height: min(88vh, calc(100vh - var(--star-banner-height) - 40px));
+  overflow: auto;
+}
+
+.story-modal__box--compact .story-modal__content {
+  font-size: clamp(12px, 1.05vw, 14px);
+  line-height: 1.45;
+}
+
 .story-modal__close {
   position: absolute;
   top: 6px;
@@ -89,7 +129,7 @@
 }
 
 @media (min-width: 641px) {
-  .story-modal__box {
+  .story-modal__box:not(.story-modal__box--compact) {
     height: calc(100vh - var(--star-banner-height) - 40px);
     max-height: calc(100vh - var(--star-banner-height) - 40px);
     overflow: hidden;
@@ -97,7 +137,7 @@
     flex-direction: column;
   }
 
-  .story-modal__content {
+  .story-modal__box:not(.story-modal__box--compact) .story-modal__content {
     flex: 1 1 auto;
     min-height: 0;
     overflow: hidden;
@@ -106,12 +146,17 @@
 }
 
 @media (max-width: 640px) {
-  .story-modal__box {
+  .story-modal__box:not(.story-modal__box--compact) {
     max-height: min(88vh, 900px);
     overflow: auto;
   }
 
   .story-modal__content {
+    font-size: clamp(12px, 3.4vw, 15px);
+    line-height: 1.5;
+  }
+
+  .story-modal__box--compact .story-modal__content {
     font-size: clamp(12px, 3.4vw, 15px);
     line-height: 1.5;
   }

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { BentoGrid } from './components/BentoGrid'
+import { FilmGrain } from './components/FilmGrain'
 import { LandingPage } from './components/LandingPage'
 import { StarBanner } from './components/StarBanner'
 import { VultureFlyby } from './components/VultureFlyby'
@@ -9,6 +10,7 @@ function App() {
 
   return (
     <>
+      <FilmGrain />
       <StarBanner />
       <VultureFlyby entered={entered} />
       {entered ? (
